@@ -10,8 +10,8 @@ jobs:
     name: Тесты
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
       - name: Poppler и Tesseract для разбора PDF и сканов
@@ -27,7 +27,7 @@ jobs:
     name: Сборка и запуск в Docker
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Сборка образа
         run: docker compose build
       - name: Запуск и проверка
