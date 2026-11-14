@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: Тесты
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Poppler и Tesseract для разбора PDF и сканов
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends poppler-utils tesseract-ocr tesseract-ocr-rus
+      - name: Тесты ядра и приложения
+        run: node --test app/*.test.js rag/test/*.test.js
+      - name: Бенчмарк по документам кейса (без модели)
+        run: |
+          node rag/cli.js ingest corpus/case --out rag/data/case-index.json --no-embed
+          node rag/eval/run-eval.js --questions rag/fixtures/case-questions.json --index rag/data/case-index.json --mode extractive
+
+  docker:
+    name: Сборка и запуск в Docker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Сборка образа
+        run: docker compose build
+      - name: Запуск и проверка
+        run: |
+          docker compose up -d
+          for i in $(seq 1 30); do curl -sf http://localhost:8787/health && break; sleep 2; done
+          curl -sf http://localhost:8787/health | grep -q '"docs":22'
+          curl -sf http://localhost:8787/report | grep -q '"failures":\[\]'
+          curl -sf -X POST http://localhost:8787/ask -H 'content-type: application/json' -d '{"question":"Как открыть ФЛС для НИОКР?"}' | grep -q '3065-1'
+          curl -sf -X POST http://localhost:8787/ask -H 'content-type: application/json' -d '{"question":"Как взять кредит в банке?"}' | grep -q '"not_found":true'
+      - name: Логи при ошибке
+        if: failure()
+        run: docker compose logs --tail=200
