@@ -10,7 +10,7 @@
 
 ![Сценарий: вопрос, шаги с отметками, цитата пункта, отказ, загрузка и удаление документа](docs/media/scenario.gif)
 
-[![Скринкаст на минуту: открыть видео](docs/media/screencast-poster.png)](docs/demo/marshrut-screencast-1min.mp4)
+https://github.com/user-attachments/assets/0d495e3c-66f5-4905-b1d6-25a83f7a1f0d
 
 Скринкаст на минуту без звука: [смотреть](docs/demo/marshrut-screencast-1min.mp4). С озвучкой: [смотреть](docs/demo/marshrut-screencast-voice.mp4). Короткая версия на 40 секунд с ускорением: [смотреть](docs/demo/marshrut-screencast.mp4).
 
