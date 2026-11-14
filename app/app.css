@@ -401,3 +401,6 @@ h2 { font-size: 1.3rem; letter-spacing: -.02em; }
 .document-origin.uploaded { color: var(--warn); font-weight: 600; }
 .secondary.danger { color: #b42318; border-color: #f1b8b2; }
 .library-uploaded { display: flex; gap: 8px; align-items: center; margin: 8px 0 4px; font-size: .9rem; font-weight: 400; }
+
+.sources-empty { list-style: none; color: var(--muted); line-height: 1.5; }
+.sources-empty p { margin: 0 0 12px; }

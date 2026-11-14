@@ -104,7 +104,7 @@ function queryTerms(s) {
       e.adj = e.adj && adj;
       prev = e;
     } else {
-      const e = { t, verb, adj, num: /^\d+$/.test(w), next: null };
+      const e = { t, w, verb, adj, num: /^\d+$/.test(w), next: null };
       out.set(t, e);
       prev = e;
     }

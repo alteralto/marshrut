@@ -22,6 +22,7 @@ jobs:
         run: |
           node rag/cli.js ingest corpus/case --out rag/data/case-index.json --no-embed
           node rag/eval/run-eval.js --questions rag/fixtures/case-questions.json --index rag/data/case-index.json --mode extractive
+          node rag/eval/run-out-of-base.js --questions rag/fixtures/out-of-base-test.txt --index rag/data/case-index.json
 
   docker:
     name: Сборка и запуск в Docker

@@ -906,6 +906,7 @@ function renderLibrary(reset = false) {
   el('more-documents').hidden = matches.length <= libraryLimit;
 }
 el('open-library').addEventListener('click', () => el('library').showModal());
+el('empty-open-library')?.addEventListener('click', () => el('library').showModal());
 el('library-filter').addEventListener('input', () => renderLibrary(true));
 el('library-uploaded')?.addEventListener('change', () => renderLibrary(true));
 el('more-documents').addEventListener('click', () => { libraryLimit += 25; renderLibrary(); });

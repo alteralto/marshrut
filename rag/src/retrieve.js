@@ -489,7 +489,14 @@ async function retrieve(store, question, opts = {}) {
       || (weight(t) > 0 && store.abbr.get(t) && [...store.abbr.get(t)].every((e) => titleV.has(e))))
     || qTerms.filter((t) => !isCommon(t) && docHas.get(t)[primaryIdx]).length >= 2;
 
+  const detail = new Map(qDetailed.map((x) => [x.t, x]));
+  // verb forms the stemmer does not mark (завести, собираюсь) and comparatives (младше, старше)
+  // and past tense (пришло), and «верно / правильно» of a yes-no question
+  const NOT_SUBJECT = /(?:[сз]ти|чь|[юуая]сь|[её]шься|[иы]шь|ше|ее|л[аои]?|^верно|^правильно)$/;
+  const unknownSubject = qTerms.filter((t) => !known(t) && !detail.get(t).verb && !detail.get(t).adj && !detail.get(t).num && !NOT_SUBJECT.test(detail.get(t).w || '')
+    && (t.length >= 4 || /[a-z]/.test(t)));
   const diagnostics = {
+    unknownSubject,
     coverage: primary.coverage,
     chunkCoverage: +chunkCov.toFixed(3),
     anchorMatched,
@@ -514,6 +521,11 @@ async function retrieve(store, question, opts = {}) {
   else if (chunkCov < o.minChunkCoverage) { notFound = true; reason = 'low_clause_coverage'; }
   else if (specTotal && primary.about < o.minAbout) { notFound = true; reason = 'not_about'; }
   else if (!anchorMatched) { notFound = true; reason = 'only_common_terms'; }
+  // Precision first: a subject word of the question that no loaded regulation
+  // uses at all («ГИБДД», «ОСАГО», «сантехник») means the topic is not covered;
+  // answering from the nearest document would be a guess.
+  // (in a base of a handful of short documents a missing word says little)
+  else if (unknownSubject.length && nDocs >= 10) { notFound = true; reason = 'unknown_term'; }
 
   // Context for the generator: best section block + top clauses, primary doc first.
   const ctx = selectContext(store, primary.docId, clauses, o.contextSize, qTerms, groups, question, o.leadRatio, o.entryClauses);
