@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Библиотека персонажей · Маршрут</title>
+<style>
+  :root {
+    color-scheme: dark;
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+    color: #f4eee7;
+    background: #202226;
+    --ink: #f4eee7;
+    --muted: #bdb9c1;
+    --line: #44454d;
+    --panel: #292b31;
+    --gold: #efd3a0;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  main { width: min(1080px, calc(100% - 44px)); margin: auto; padding: 28px 0 55px; }
+  a { color: var(--gold); text-underline-offset: 4px; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  button, input, select { font: inherit; }
+  button, select, summary { cursor: pointer; }
+  .top, .title-row, .section-title, .tools, .role-form { display: flex; justify-content: space-between; gap: 14px; align-items: center; }
+  .top { font-size: 13px; }
+  .top a { color: var(--muted); }
+  .brand { display: flex; align-items: center; gap: 9px; font-weight: 720; }
+  .brand svg { color: var(--gold); }
+  header { margin: 28px 0 22px; }
+  h1 { font-size: clamp(34px, 6vw, 58px); line-height: 1.06; letter-spacing: -.06em; margin: 0 0 8px; font-weight: 670; }
+  h2 { font-size: 22px; letter-spacing: -.035em; margin: 0; }
+  p { margin: 0; color: var(--muted); line-height: 1.5; }
+  .studio { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(290px, 1fr); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: var(--panel); }
+  .portrait { --tint: #dac9df; position: relative; display: grid; align-items: end; place-items: end center; min-height: 325px; margin: 0; overflow: hidden; background: var(--tint); isolation: isolate; }
+  .portrait::before, .portrait::after { position: absolute; content: ""; z-index: -1; pointer-events: none; }
+  .portrait::before { height: 84%; aspect-ratio: 1; top: 10%; border-radius: 50%; background: #faf0df; opacity: .53; }
+  .portrait::after { width: 107%; height: 74%; border: 1px solid #fff4e2; opacity: .46; left: -49%; top: 40%; border-radius: 50%; transform: rotate(-22deg); }
+  .portrait img { display: block; width: min(90%, 430px); height: 302px; object-fit: contain; object-position: center bottom; }
+  .portrait figcaption { position: absolute; bottom: 12px; left: 12px; border-radius: 8px; background: #f8eee4; color: #473b50; padding: 6px 10px; font-size: 13px; font-weight: 720; }
+  .editor { display: flex; flex-direction: column; gap: 15px; padding: clamp(17px, 2.9vw, 30px); }
+  .editor label { display: grid; gap: 7px; color: var(--muted); font-size: 13px; }
+  select, input[type="text"] { width: 100%; padding: 9px 11px; color: var(--ink); background: #22242a; border: 1px solid #555560; border-radius: 9px; min-height: 40px; }
+  .tools { flex-wrap: wrap; justify-content: start; gap: 8px; margin-top: auto; }
+  .tool { display: inline-flex; align-items: center; padding: 8px 10px; border: 1px solid #555560; border-radius: 8px; min-height: 38px; background: transparent; color: var(--ink); text-decoration: none; font-size: 13px; }
+  .tool:hover { background: #3b3d44; }
+  .tool.primary { color: #2c2530; border-color: var(--gold); background: var(--gold); font-weight: 690; }
+  .tool.primary:hover { background: #f8e0b7; }
+  .role-form { align-items: end; margin-top: 10px; }
+  .role-form label { flex: 1; }
+  summary { font-size: 13px; color: var(--gold); }
+  #status { font-size: 13px; min-height: 20px; }
+  section { margin-top: 29px; }
+  .section-title { margin-bottom: 12px; flex-wrap: wrap; }
+  .section-title a { font-size: 13px; }
+  .gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 11px; }
+  .character { display: block; text-align: left; width: 100%; padding: 4px; border: 1px solid var(--line); border-radius: 12px; color: var(--ink); background: var(--panel); }
+  .character:hover { background: #373943; }
+  .character[aria-pressed="true"] { border-color: var(--gold); }
+  .mini { display: block; height: clamp(100px, 13vw, 164px); border-radius: 8px; overflow: hidden; }
+  .mini img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; }
+  .character strong { display: block; padding: 7px 6px 5px; font-size: 14px; }
+  .character[aria-pressed="true"] strong { color: var(--gold); }
+  .references { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; padding: 15px 0 0; border-top: 1px solid var(--line); }
+  .references a { font-size: 15px; font-weight: 700; }
+  .references p { margin-top: 5px; font-size: 13px; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  @media (max-width: 690px) {
+    main { width: calc(100% - 28px); padding-top: 19px; }
+    .studio { grid-template-columns: 1fr; }
+    .portrait { min-height: 260px; }
+    .portrait img { height: 248px; }
+    .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .mini { height: clamp(115px, 32vw, 185px); }
+    .references { grid-template-columns: 1fr; }
+  }
+</style>
+<script src="comic-people.js" defer></script>
+</head>
+<body>
+<main>
+    <a href="mipt-scene-library.html">← Библиотека сцен</a>
+  <div class="top">
+    <span class="brand"><svg width="21" height="21" viewBox="0 0 21 21" aria-hidden="true"><path d="M3 16h4l3-10h4l3 10h2" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="3" cy="16" r="2" fill="currentColor"/><circle cx="18" cy="16" r="2" fill="currentColor"/></svg>Маршрут</span>
+    <a href="aid-comic.html">Пробный мультфильм ↗</a>
+  </div>
+  <header>
+    <h1>Библиотека персонажей</h1>
+    <p>Выбери роль и примерь на неё любой из восьми образов.</p>
+  </header>
+  <div class="studio">
+    <figure class="portrait" id="portrait">
+      <img id="portrait-image" src="comic-people.svg#secretary" alt="Ольга">
+      <figcaption id="portrait-name">Ольга</figcaption>
+    </figure>
+    <div class="editor">
+      <h2>Примерка на роль</h2>
+      <label>Роль в регламенте<select id="role"></select></label>
+      <label>Персонаж<select id="person"></select></label>
+      <details>
+        <summary>Добавить свою роль</summary>
+        <form id="add-role" class="role-form">
+          <label>Название роли<input id="new-role" type="text" maxlength="70" required></label>
+          <button class="tool primary" type="submit">Добавить</button>
+        </form>
+      </details>
+      <div class="tools">
+        <button id="save" class="tool primary" type="button">Сохранить подбор</button>
+        <button id="load" class="tool" type="button">Открыть подбор</button>
+        <input id="load-file" type="file" accept=".json,application/json" hidden>
+        <a id="svg-link" class="tool" href="comic-people.svg#secretary" target="_blank" rel="noopener">Открыть SVG</a>
+      </div>
+      <p id="status" role="status"></p>
+    </div>
+  </div>
+
+  <section aria-labelledby="gallery-title">
+    <div class="section-title">
+      <h2 id="gallery-title">Все персонажи</h2>
+      <div class="tools">
+        <a href="comic-people.svg" download>Скачать персонажей в SVG</a>
+      </div>
+    </div>
+    <div id="gallery" class="gallery"></div>
+  </section>
+
+  <section aria-labelledby="references-title">
+    <div class="section-title"><h2 id="references-title">Готовые наборы для сравнения</h2></div>
+    <div class="references">
+      <article><a href="https://humaaans.com/" target="_blank" rel="noopener">Humaaans ↗</a><p>Сменные причёски, одежда и позы. CC0 подходит для адаптации и передачи библиотеки.</p></article>
+      <article><a href="https://storyset.com/illustration/signing-a-contract/pana" target="_blank" rel="noopener">Storyset Pana ↗</a><p>Детальные рабочие сцены в SVG. При бесплатном использовании нужно указать автора.</p></article>
+      <article><a href="https://www.drawkit.com/illustrations/people-working-collaborating-illustrations" target="_blank" rel="noopener">DrawKit · People Working ↗</a><p>Работа, учёба и звонки в SVG. <a href="https://www.drawkit.com/license" target="_blank" rel="noopener">Условия DrawKit</a> ограничивают передачу исходных файлов.</p></article>
+    </div>
+  </section>
+</main>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const { portraits, defaultRoles, portraitUrl, parseRoles } = window.ComicPeople;
+    const roleSelect = document.getElementById('role');
+    const personSelect = document.getElementById('person');
+    const gallery = document.getElementById('gallery');
+    const portrait = document.getElementById('portrait');
+    const portraitImage = document.getElementById('portrait-image');
+    const portraitName = document.getElementById('portrait-name');
+    const svgLink = document.getElementById('svg-link');
+    const status = document.getElementById('status');
+    const newRole = document.getElementById('new-role');
+    const fileInput = document.getElementById('load-file');
+    const cards = new Map();
+    let roles = defaultRoles.map(role => ({ ...role }));
+
+    function refreshRoleOptions(index) {
+      roleSelect.replaceChildren(...roles.map((role, position) => new Option(role.label, position)));
+      roleSelect.selectedIndex = index;
+    }
+
+    function showRole(message = '') {
+      const role = roles[roleSelect.selectedIndex];
+      const person = portraits[role.person];
+      const url = portraitUrl(role.person);
+      personSelect.value = role.person;
+      portraitImage.src = url;
+      portraitImage.alt = person.name;
+      portraitName.textContent = person.name;
+      portrait.style.setProperty('--tint', person.color);
+      svgLink.href = url;
+      for (const [id, button] of cards) button.setAttribute('aria-pressed', String(id === role.person));
+      status.textContent = message;
+    }
+
+    function choosePerson(id) {
+      roles[roleSelect.selectedIndex].person = id;
+      showRole('Образ назначен выбранной роли на этой доске.');
+    }
+
+    for (const [id, person] of Object.entries(portraits)) {
+      personSelect.add(new Option(person.name, id));
+      const button = document.createElement('button');
+      const thumbnail = document.createElement('span');
+      const image = document.createElement('img');
+      const name = document.createElement('strong');
+      button.className = 'character';
+      button.type = 'button';
+      thumbnail.className = 'mini';
+      thumbnail.style.backgroundColor = person.color;
+      image.src = portraitUrl(id);
+      image.alt = '';
+      name.textContent = person.name;
+      thumbnail.append(image);
+      button.append(thumbnail, name);
+      button.addEventListener('click', () => choosePerson(id));
+      gallery.append(button);
+      cards.set(id, button);
+    }
+
+    roleSelect.addEventListener('change', () => showRole());
+    personSelect.addEventListener('change', () => choosePerson(personSelect.value));
+    document.getElementById('add-role').addEventListener('submit', event => {
+      event.preventDefault();
+      const label = newRole.value.trim();
+      if (!label || roles.some(role => role.label.toLowerCase() === label.toLowerCase())) {
+        status.textContent = 'Введи новое название роли.';
+        return;
+      }
+      if (roles.length >= 100) {
+        status.textContent = 'На доске можно сохранить до 100 ролей.';
+        return;
+      }
+      roles.push({ label, person: personSelect.value });
+      refreshRoleOptions(roles.length - 1);
+      newRole.value = '';
+      showRole('Роль добавлена в подбор.');
+    });
+
+    document.getElementById('save').addEventListener('click', () => {
+      const config = JSON.stringify({ version: 1, roles }, null, 2);
+      const url = URL.createObjectURL(new Blob([config], { type: 'application/json' }));
+      const download = document.createElement('a');
+      download.href = url;
+      download.download = 'marshrut-cast.json';
+      download.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      status.textContent = 'Подбор можно снова открыть из файла JSON.';
+    });
+
+    document.getElementById('load').addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', async () => {
+      const file = fileInput.files[0];
+      if (!file) return;
+      try {
+        if (file.size > 50_000) throw new Error('Файл подбора слишком большой.');
+        roles = parseRoles(JSON.parse(await file.text()));
+        refreshRoleOptions(0);
+        showRole('Подбор открыт.');
+      } catch (error) {
+        status.textContent = error instanceof SyntaxError ? 'Файл не удалось прочитать как JSON.' : error.message;
+      } finally {
+        fileInput.value = '';
+      }
+    });
+
+    refreshRoleOptions(0);
+    showRole();
+  });
+</script>
+</body>
+</html>

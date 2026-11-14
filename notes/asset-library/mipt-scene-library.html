@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="ru" data-style="apple" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Библиотека сцен МФТИ · Маршрут</title>
+<link rel="stylesheet" href="../mockup/graphite.css">
+<script src="../mockup/graphite.js"></script>
+<script src="comic-people.js" defer></script>
+<script src="scene-catalog.js" defer></script>
+<script src="commission-scene.js" defer></script>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.5 var(--font); }
+  a { color: var(--stamp); text-underline-offset: 4px; }
+  :focus-visible { outline: 2px solid var(--stamp); outline-offset: 3px; }
+  main { width: min(1050px, calc(100% - 40px)); margin: auto; padding: 22px 0 52px; }
+  nav { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding-bottom: 15px; border-bottom: 1px solid var(--rule); }
+  nav a:first-child { margin-right: auto; }
+  nav a { font-size: 13px; text-decoration: none; }
+  header { margin: 29px 0 22px; }
+  h1 { margin: 0; font-size: clamp(34px, 5.4vw, 61px); line-height: 1.04; letter-spacing: -.055em; font-weight: 650; }
+  h2 { font-size: 24px; letter-spacing: -.035em; margin: 0 0 12px; }
+  h3 { margin: 0 0 5px; font-size: 16px; }
+  p { margin: 5px 0; color: var(--muted); }
+  .grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
+  .card, .player { background: var(--sheet); border: 1px solid var(--rule); border-radius: var(--radius-card); box-shadow: var(--card-shadow); }
+  .card { padding: clamp(17px, 3vw, 28px); }
+  ul, ol { padding-left: 1.25rem; margin: 9px 0; }
+  li + li { margin-top: 6px; }
+  section { margin-top: 27px; scroll-margin-top: 16px; }
+  .scenes { display: grid; grid-template-columns: repeat(auto-fit,minmax(185px,1fr)); gap: 11px; }
+  .scenes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .scenes .card { padding: 16px; }
+  .scene-links { margin: 12px 0 0; padding: 0; list-style: none; }
+  .scene-links a { display: inline-block; padding-block: 2px; font-size: 14px; }
+  .scene-filter { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; margin: 0 0 14px; }
+  .scene-filter[hidden] { display: none; }
+  .scene-filter select { padding: 6px 10px; font: inherit; border: 1px solid var(--rule-strong); border-radius: 10px; color: var(--ink); background: var(--sheet); }
+  .scene-filter output { color: var(--muted); font-size: 13px; }
+  .route-links { display: flex; flex-wrap: wrap; gap: 7px 17px; margin-top: 12px; }
+  .source-check { padding: 0; margin: 0; list-style: none; }
+  .source-check li { padding-block: 10px; border-bottom: 1px solid var(--rule); }
+  .source-check li:last-child { border-bottom: 0; }
+  .source-check strong { display: block; }
+  .source-check a { display: inline-block; margin-top: 4px; }
+  .source-check a + a { margin-left: 10px; }
+  @media (min-width: 691px) and (max-width: 880px) { .scenes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+  .scenes a { text-decoration: none; }
+  .scenes a:hover { text-decoration: underline; }
+  .scene-section { margin-top: 18px; }
+  .player { overflow: hidden; }
+  .player-header, .player-footer { padding: 13px 18px; display: flex; gap: 10px 14px; align-items: center; flex-wrap: wrap; justify-content: space-between; }
+  .player-footer p { flex: 1 1 350px; margin: 0; }
+  button { font: inherit; cursor: pointer; }
+  .options { display: flex; gap: 2px; padding: 3px; background: var(--lane); border-radius: 99px; }
+  .options button { padding: 5px 10px; border: 0; border-radius: 99px; background: transparent; color: var(--muted); font-size: 13px; font-weight: 600; }
+  .options button[aria-pressed="true"] { background: var(--segment); color: var(--ink); box-shadow: 0 1px 4px #1d1d1f20; }
+  #play { border: 0; border-radius: 99px; padding: 8px 16px; background: var(--action); color: var(--on-stamp); font-weight: 600; }
+  #play:hover { background: var(--action-hover); }
+  .screen { display: block; width: 100%; height: auto; background: #dce6f1; }
+  details { padding: 11px 0; border-bottom: 1px solid var(--rule); }
+  summary { cursor: pointer; font-weight: 650; }
+  dt { font-weight: 650; }
+  dd { margin: 3px 0 10px; color: var(--muted); }
+  .source-line { font-size: 13px; }
+  @media(max-width:690px) { main { width: calc(100% - 26px); } .grid, .scenes { grid-template-columns: 1fr; } .player-header,.player-footer { padding-inline: 12px; } }
+</style>
+</head>
+<body>
+<main>
+<nav aria-label="Разделы доски"><a href="/">← Навигатор</a><a href="#scenes">Сцены</a><a href="scene-workshop.html#objects">Предметы</a><a href="#cast">Персонажи и предметы</a><a href="#documents">Регламенты</a><a href="glossary.html">Словарь</a></nav>
+<header><h1>Библиотека сцен МФТИ</h1><p>Готовые анимации, персонажи и предметы для маршрутов по регламентам МФТИ.</p></header>
+
+<section id="scenes" aria-labelledby="scenes-title">
+<h2 id="scenes-title">Общие сцены</h2>
+<div class="scene-filter" hidden="hidden">
+  <label for="scene-route">Показать примеры</label>
+  <select id="scene-route">
+    <option value="all">Все регламенты</option>
+    <option value="concert">Концертный зал</option>
+    <option value="fls">Открытие ФЛС</option>
+    <option value="trip">Командировка</option>
+    <option value="aid">Матпомощь</option>
+    <option value="purchase">Закупка</option>
+    <option value="leave">Академический отпуск</option>
+  </select>
+  <output id="scene-count" aria-live="polite"></output>
+</div>
+<div class="scenes" id="scene-catalog">
+  <article class="card">
+    <h3>Оформить документ</h3><p>Камера приближает форму и показывает, какие поля заполняет персонаж.</p>
+    <ul class="scene-links">
+      <li data-route="concert"><a href="document-prepare.html?example=concert">Служебная записка для зала</a></li>
+      <li data-route="fls"><a href="document-prepare.html?example=fls">Карточка проекта для ФЛС</a></li>
+      <li data-route="trip"><a href="document-prepare.html?example=trip">Решение о командировании</a></li>
+      <li data-route="aid"><a href="document-prepare.html?example=aid">Заявление на матпомощь</a></li>
+    </ul>
+  </article>
+  <article class="card">
+    <h3>Передать документ</h3><p>Лист становится вложением в письмо или переходит к получателю в руки.</p>
+    <ul class="scene-links">
+      <li data-route="concert"><a href="document-transfer.html?example=concert">Служебная записка в КМО</a></li>
+      <li data-route="fls"><a href="document-transfer.html?example=fls">Договор в бухгалтерию</a></li>
+      <li data-route="trip"><a href="document-transfer.html?example=trip">Решение в группу командирования</a></li>
+      <li data-route="aid"><a href="document-transfer.html?example=aid">Выписка в УВД</a></li>
+    </ul>
+  </article>
+  <article class="card">
+    <h3>Проверить комплект</h3><p>Проверяющий сверяет документы. Если листа не хватает, в кадре остаётся пустое место.</p>
+    <ul class="scene-links">
+      <li data-route="aid"><a href="document-check.html?example=aid">Заявление на матпомощь</a></li>
+      <li data-route="purchase"><a href="document-check.html?example=purchase">Лист визирования в закупке</a></li>
+      <li data-route="fls"><a href="document-check.html?example=fls">Карточка проекта в ФЭУ</a></li>
+    </ul>
+  </article>
+  <article class="card">
+    <h3>Рассмотреть на комиссии</h3><p>Комиссия получает комплект, рассматривает его и оформляет решение.</p>
+    <ul class="scene-links">
+      <li data-route="aid"><a href="#commission" data-commission="aid">Рассмотрение заявления на матпомощь</a></li>
+      <li data-route="leave"><a href="#commission" data-commission="leave">Рассмотрение заявления на отпуск</a></li>
+    </ul>
+  </article>
+  <article class="card">
+    <h3>Внести запись</h3><p>После проверки запись появляется в календаре или в списке зарегистрированных документов.</p>
+    <ul class="scene-links">
+      <li data-route="concert"><a href="/?demo=concert&amp;step=2">Сверить даты с начальником КМО</a></li>
+      <li data-route="concert"><a href="/?demo=concert&amp;step=6">Внести мероприятие в график</a></li>
+      <li data-route="fls"><a href="/?demo=fls&amp;step=10">Зарегистрировать приказ об открытии ФЛС</a></li>
+    </ul>
+  </article>
+  <article class="card">
+    <h3>Подписать документ</h3><p>Крупный план показывает подпись на бумаге или отметку об электронной подписи.</p>
+    <ul class="scene-links">
+      <li data-route="concert"><a href="/?demo=concert&amp;step=8">Отметить прохождение инструктажа</a></li>
+      <li data-route="concert"><a href="/?demo=concert&amp;step=10">Сдать зал под роспись</a></li>
+      <li data-route="fls"><a href="/?demo=fls&amp;step=9">Подписать приказ об открытии ФЛС</a></li>
+    </ul>
+  </article>
+  <article class="card">
+    <h3>Согласовать документ</h3><p>Согласующий проверяет проект, затем на документе появляется отметка о согласовании.</p>
+    <ul class="scene-links">
+      <li data-route="fls"><a href="/?demo=fls&amp;step=3">Согласование проекта приказа в Центре трансфера технологий</a></li>
+    </ul>
+  </article>
+  <article class="card">
+    <h3>Выбрать порядок действий</h3><p>По условиям регламента можно выбрать один из двух или трёх вариантов.</p>
+    <ul class="scene-links">
+      <li data-route="concert"><a href="/?demo=concert&amp;step=3">Выбрать основание для бронирования</a></li>
+      <li data-route="concert"><a href="/?demo=concert&amp;step=11">Выбрать способ возмещения ущерба</a></li>
+    </ul>
+  </article>
+  <article class="card">
+    <h3>Провести интервью</h3><p>Интервьюер задаёт вопрос, кандидат отвечает, итог записывают.</p>
+    <ul class="scene-links">
+      <li data-route="all"><a href="scene-workshop.html#interview">Посмотреть сцену и предметы</a></li>
+    </ul>
+  </article>
+  <article class="card">
+    <h3>Передать оборудование</h3><p>Предмет переходит от специалиста к ответственному за мероприятие.</p>
+    <ul class="scene-links">
+      <li data-route="concert"><a href="/?demo=concert&amp;step=9">Передать микрофон и кликер</a></li>
+    </ul>
+  </article>
+</div>
+<div class="route-links" aria-label="Полные маршруты">
+  <a href="scene-gallery.html">Галерея: все сцены на регламентах кейса</a>
+  <a href="/?demo=concert&amp;step=1">Маршрут бронирования зала</a>
+  <a href="/?demo=fls&amp;step=1">Маршрут открытия ФЛС</a>
+  <a href="aid-route.html">Маршрут матпомощи</a>
+  <a href="aid-comic.html">Мультфильм «Путь выписки»</a>
+</div>
+
+<div class="scene-section player" id="commission" aria-labelledby="commission-title">
+  <div class="player-header">
+    <h3 id="commission-title">Рассмотреть на комиссии</h3>
+    <div class="options" role="group" aria-label="Примеры комиссии">
+      <button type="button" data-case="aid" aria-pressed="true">Матпомощь</button>
+      <button type="button" data-case="leave" aria-pressed="false">Академический отпуск</button>
+    </div>
+  </div>
+  <svg id="commission-stage" class="screen" width="960" height="460" viewBox="0 0 960 460" aria-hidden="true">
+  </svg>
+  <div class="player-footer">
+    <button type="button" id="play">Смотреть</button>
+    <p id="commission-caption" role="status"></p>
+    <a id="commission-source">Текст регламента</a>
+  </div>
+</div>
+
+</section>
+
+<section id="cast" aria-labelledby="cast-title">
+<h2 id="cast-title">Что нужно для сцен</h2>
+<div class="grid">
+  <article class="card">
+    <h3>Персонажи</h3>
+    <ul>
+      <li><strong>Заявители:</strong> обучающийся, аспирант, выпускник, работник, соискатель, внутренний заказчик.</li>
+      <li><strong>Руководители и подписанты:</strong> руководитель подразделения, директор, заведующий кафедрой, проректор, ректор или уполномоченное лицо.</li>
+      <li><strong>Комиссия:</strong> председатель, заместитель, секретарь и члены комиссии. Состав и названия ролей задаются для каждого регламента.</li>
+      <li><strong>Сотрудники подразделений:</strong> дирекция физтех-школы / ИНБИКСТ, учебное управление, УВД, стипендиальный отдел, ОМС, канцелярия.</li>
+      <li><strong>Специалисты:</strong> финансовый отдел, бухгалтерия, закупки, юрист, кадровик, профсоюз, служба режима.</li>
+      <li><strong>Внешние участники:</strong> поставщик, подрядчик, принимающая сторона, организация-заказчик. Для органа или подразделения можно использовать карточку с названием.</li>
+    </ul>
+    <p>В нашей SVG-библиотеке уже восемь образов. Для следующих проб приоритетны закупщик, юрист, кадровик и контрагент. <a href="comic-cast.html">Наши персонажи</a></p>
+  </article>
+  <article class="card">
+    <h3>Предметы и системы</h3>
+    <ul>
+      <li><strong>Формы и приложения:</strong> заявление, Решение, ходатайство, основание, справка, скан, подтверждающие документы.</li>
+      <li><strong>Рассмотрение и согласование:</strong> пакет, лист визирования, список мест, реестр, протокол, выписка, приказ.</li>
+      <li><strong>Передача:</strong> папка, PDF, письмо, уведомление, личный кабинет, экран СЭД или 1С.</li>
+      <li><strong>Финансы:</strong> счёт, ФЛС, смета, аванс, платёжный документ, чек, отчёт с приложениями.</li>
+      <li><strong>Поездка:</strong> приглашение и перевод, билет, бронь, маршрутный лист, паспорт, виза.</li>
+      <li><strong>Закупка и договор:</strong> заявка, описание, расчёт цены, проект договора, акт, накладная, УПД, электронная площадка.</li>
+      <li><strong>Учёба и кадры:</strong> учебный план, результаты аттестации, график, трудовой договор, приказ, архив.</li>
+      <li><strong>Концертный зал:</strong> календарь бронирования, служебная записка, сценарный план, микрофон и кликер.</li>
+    </ul>
+    <p><a href="scene-workshop.html#objects">Предметы из библиотеки сцен</a></p>
+  </article>
+</div>
+</section>
+
+<section id="documents" class="card" aria-labelledby="documents-title">
+<h2 id="documents-title">Документы</h2>
+<details id="concert-documents">
+  <summary>Бронирование концертного зала</summary>
+  <ul class="source-check">
+    <li><strong>Регламент и приложения</strong>
+      <p>Приложение № 1 содержит служебную записку, список для доступа и расписание. В записке есть поле для отметки о состоянии зала после мероприятия. Приложение № 2 содержит технические требования.</p>
+      <a href="/forms/concert-booking-memo">Бланк записки (PDF)</a>
+      <a href="/?demo=concert&amp;step=4">Заполнить записку в приложении</a>
+      <a href="/original/регламент-бронирования-конц-зала#page=8">Технический регламент (PDF, стр. 8)</a>
+    </li>
+    <li><strong>Приказ, смета и прейскурант</strong>
+      <p>Приказ и смета упомянуты в пп. 6.2 и 6.4. Прейскурант для сторонних заказчиков упомянут в п. 6.5. Самих файлов в приложениях к регламенту зала нет.</p>
+      <a href="/original/регламент-бронирования-конц-зала#page=5">Раздел 6 (PDF, стр. 5)</a>
+    </li>
+    <li><strong>График мероприятий</strong>
+      <p>Порядок включения мероприятий описан в пп. 2.1–2.2. Сам график и свободные даты в регламенте не опубликованы.</p>
+      <a href="/doc/регламент-бронирования-конц-зала?format=html#cl-2-1">Пп. 2.1–2.2</a>
+    </li>
+    <li><strong>Сценарный план, материалы и журналы</strong>
+      <p>В пп. 3.4–3.5 указаны состав и срок подачи материалов и сценарного плана. В п. 3.6 требуется подпись в журналах инструктажа. Образцов плана и журналов в приложениях нет.</p>
+      <a href="/doc/регламент-бронирования-конц-зала?format=html#cl-3-4">Пп. 3.4–3.6</a>
+    </li>
+    <li><strong>Инструкции по охране труда</strong>
+      <p>ИОТ № 05 и ИОТ № 08 упомянуты в п. 3.1. Отдельных файлов этих инструкций в поисковой базе нет.</p>
+      <a href="/doc/регламент-бронирования-конц-зала?format=html#cl-3-1">П. 3.1</a>
+    </li>
+    <li><strong>Другие локальные акты</strong>
+      <p>П. 1.2 ссылается на правила трудового распорядка и положения о пропускном режиме, мероприятиях на территории МФТИ и КМО. Есть сохранённая копия правил трудового распорядка за 2020 год. Остальные три положения отдельными файлами в базе не найдены.</p>
+      <a href="/doc/регламент-бронирования-конц-зала?format=html#cl-1-2">П. 1.2</a>
+      <a href="/corpus/text/mipt-pvtr.txt">Копия правил трудового распорядка</a>
+    </li>
+  </ul>
+</details>
+<details>
+  <summary>Файлы поисковой базы</summary>
+  <p id="indexed-status" role="status"></p>
+  <ul id="indexed-sources" class="source-check"></ul>
+</details>
+<details>
+  <summary>Источники и роли в ранних примерах</summary>
+  <p>Для части сцен здесь доступны сохранённые текстовые копии регламентов из проекта.</p>
+<details class="inventory-item">
+        <summary>Командировки МФТИ</summary>
+        <dl>
+          <dt>Персонажи и участники</dt><dd>Работник, руководитель подразделения, ответственное лицо группы командирования ОМС, сотрудник финансового отдела, бухгалтер, сотрудник планово-экономического отдела, уполномоченный проректор, директор по режиму, канцелярия, Первый отдел, юридический отдел, принимающая организация.</dd>
+          <dt>Предметы, документы и системы</dt><dd>Приглашение и перевод, служебная записка, Решение о командировании и его изменение, источник финансирования и ФЛС, приказ и копия, лист ознакомления, аванс и платёжные документы, билеты, бронь и документы о проживании, маршрутный лист, виза, паспорт, экспертное заключение, чеки, отчёты о расходах и результатах, уведомление о задолженности и согласие на удержание.</dd>
+        </dl>
+        <p>Пп. 46–75 · <a href="/doc/mipt-business-trip?format=html#cl-46">Текст из поисковой базы</a></p>
+      </details>
+<details class="inventory-item">
+        <summary>Материальная помощь обучающимся МФТИ</summary>
+        <dl>
+          <dt>Персонажи и участники</dt><dd>Обучающийся, стипендиальная комиссия, председатель и члены комиссии, секретарь комиссии, сотрудник и дирекция физтех-школы или ИНБИКСТ, управление внеучебной деятельности, стипендиальный отдел, курирующий проректор или директор.</dd>
+          <dt>Предметы, документы и системы</dt><dd>Заявление, подтверждающие документы и оригиналы, сканы или фото, корпоративная почта, личный кабинет, протокол заседания, согласие члена комиссии, выписка из протокола, приказ, график передачи приказов, 1С УОП и 1С Документооборот, архив.</dd>
+        </dl>
+        <p>Пп. 1.2–4.3 · <a href="../../corpus/text/mipt-matpomosch-obuch.txt">Сохранённая текстовая копия</a></p>
+      </details>
+<details class="inventory-item">
+        <summary>Закупка у единственного поставщика до 100 тыс. ₽</summary>
+        <dl>
+          <dt>Персонажи и участники</dt><dd>Внутренний заказчик, отдел закупок, финансовый отдел, бухгалтерия, правовой отдел, отдел интеллектуальной собственности, управление по довузовской подготовке и международной деятельности, поставщик или подрядчик, уполномоченный подписант заказчика.</dd>
+          <dt>Предметы, документы и системы</dt><dd>Пакет документов, проект договора, договор-счёт, счёт на оплату, описание предмета закупки, обоснование начальной цены, код ОКПД 2, лист визирования, ФЛС, служебная записка для срочной закупки, реестр закупок, оригинал договора, акт выполненных работ или услуг, товарная накладная, универсальный передаточный документ.</dd>
+        </dl>
+        <p>Разд. 2–4, приложения · <a href="../../corpus/text/mipt-zakupka-ep-do100.txt">Сохранённая текстовая копия</a></p>
+      </details>
+<details class="inventory-item">
+        <summary>Закупка у единственного поставщика свыше 100 тыс. ₽</summary>
+        <dl>
+          <dt>Персонажи и участники</dt><dd>Внутренний заказчик, отдел закупок, финансовый отдел, бухгалтерия, правовой отдел и другие визирующие подразделения, закупочная комиссия, председатель и члены комиссии, поставщик, уполномоченный подписант.</dd>
+          <dt>Предметы, документы и системы</dt><dd>Пакет и обоснование закупки, описание предмета, обоснование начальной цены, проект договора, лист визирования, протокол закупочной комиссии, реестр закупок, подписанный договор, акт, накладная и универсальный передаточный документ, документы на оплату, дополнительное соглашение.</dd>
+        </dl>
+        <p>Пп. 2.16, 3.1–3.5, 5.1 и приложения · <a href="../../corpus/text/mipt-zakupka-ep-svyshe100.txt">Сохранённая текстовая копия</a></p>
+      </details>
+<details class="inventory-item">
+        <summary>Общее положение о закупке МФТИ</summary>
+        <dl>
+          <dt>Персонажи и участники</dt><dd>Заказчик, руководитель и внутренний заказчик, организатор закупки, закупочная комиссия и её члены, оператор электронной площадки, участники закупки и их представители, победитель, поставщик, подрядчик, исполнитель, федеральный орган и контрольный орган.</dd>
+          <dt>Предметы, документы и системы</dt><dd>План закупок, извещение, конкурсная документация и разъяснения, описание объекта и расчёт цены, заявка или оферта, ценовое предложение, протоколы, электронная площадка и ЕИС, денежное обеспечение или гарантия, договор, документы приёмки, отчётность, реестр, уведомление и жалоба.</dd>
+        </dl>
+        <p>Разделы о планировании, комиссии, конкурентных закупках и исполнении договора · <a href="../../corpus/text/mipt-polozhenie-o-zakupke.txt">Сохранённая текстовая копия</a></p>
+      </details>
+<details class="inventory-item">
+        <summary>Академический и другие отпуска обучающихся</summary>
+        <dl>
+          <dt>Персонажи и участники</dt><dd>Обучающийся, ректор или уполномоченное лицо, директор и администрация физтех-школы, учебное подразделение, комиссия, медицинская организация или другой выдающий документы орган, военный комиссариат.</dd>
+          <dt>Предметы, документы и системы</dt><dd>Заявление на отпуск и выход из него, ходатайство директора, медицинское заключение, повестка и иные подтверждающие документы, описание стартапа, выписка из ЕГРЮЛ, учредительные документы, запрос о подлинности, решение комиссии, приказ, свидетельство о рождении ребёнка.</dd>
+        </dl>
+        <p>Разд. 2–5, формы приложений · <a href="../../corpus/text/mipt-otpuska-obuch.txt">Сохранённая текстовая копия</a></p>
+      </details>
+<details class="inventory-item">
+        <summary>Перевод обучающихся МФТИ</summary>
+        <dl>
+          <dt>Персонажи и участники</dt><dd>Обучающийся, директор исходной и принимающей физтех-школ, заведующие исходной и принимающей кафедрами, дирекция принимающей физтех-школы, проректор по учебной работе, ректор или уполномоченное лицо, организация-заказчик целевого обучения.</dd>
+          <dt>Предметы, документы и системы</dt><dd>Заявление о переводе и визы, список вакантных мест, индивидуальный учебный план, график ликвидации академической разницы, договор платного обучения или допсоглашение, согласование организации-заказчика, приказ о переводе, уведомление по электронной почте.</dd>
+        </dl>
+        <p>Пп. 2.1–2.2, 2.11–2.15, приложение 1 · <a href="../../corpus/text/mipt-perevod.txt">Сохранённая текстовая копия</a></p>
+      </details>
+<details class="inventory-item">
+        <summary>Переход с платного обучения на бесплатное</summary>
+        <dl>
+          <dt>Персонажи и участники</dt><dd>Обучающийся, ректор, физтех-школа и её администрация, комиссия по переходу, председатель, секретарь и члены комиссии.</dd>
+          <dt>Предметы, документы и системы</dt><dd>Заявление, документы о праве на переход и особых обстоятельствах, сведения об успеваемости и задолженности, список вакантных бюджетных мест, ходатайство физтех-школы, решение или протокол комиссии, приказ о переходе.</dd>
+        </dl>
+        <p>Разд. 2 и приложение 1 · <a href="../../corpus/text/mipt-platnoe-besplatnoe.txt">Сохранённая текстовая копия</a></p>
+      </details>
+<details class="inventory-item">
+        <summary>Отчисление обучающихся МФТИ</summary>
+        <dl>
+          <dt>Персонажи и участники</dt><dd>Обучающийся или выпускник, ректор, руководитель и сотрудники учебного подразделения, учебное управление, государственная экзаменационная и экзаменационная комиссии, заказчик платного обучения, получатель почтового уведомления.</dd>
+          <dt>Предметы, документы и системы</dt><dd>Заявление, протокол экзаменационной комиссии, приказ и выписка, акт об отчислении и акт об отказе от подписи, уведомление с почтовым подтверждением, договор платного обучения, претензия, акт сверки, документы о задолженности.</dd>
+        </dl>
+        <p>Разд. 3 и формы приложений · <a href="../../corpus/text/mipt-otchislenie.txt">Сохранённая текстовая копия</a></p>
+      </details>
+<details class="inventory-item">
+        <summary>Стипендии и поддержка обучающихся МФТИ</summary>
+        <dl>
+          <dt>Персонажи и участники</dt><dd>Студент, аспирант, слушатель подготовительного отделения, институтская и подразделенческие стипендиальные комиссии, учебное подразделение, подготовительное отделение, профсоюзный комитет студентов, ректор, медицинская организация.</dd>
+          <dt>Предметы, документы и системы</dt><dd>Результаты аттестации, справка для социальной стипендии, документы о достижениях, расчёт распределения средств, приказ о назначении, заявление на пособие, медицинская справка, комплект подтверждений, выплата.</dd>
+        </dl>
+        <p>Разд. 2–5 · <a href="../../corpus/text/mipt-stipendii.txt">Сохранённая текстовая копия</a></p>
+      </details>
+<details class="inventory-item">
+        <summary>Внутренний трудовой распорядок МФТИ</summary>
+        <dl>
+          <dt>Персонажи и участники</dt><dd>Соискатель, работник и совместитель, работодатель, ректор или уполномоченный подписант, руководитель подразделения, представитель профсоюза, водители и другие работники с особым режимом.</dd>
+          <dt>Предметы, документы и системы</dt><dd>Паспорт, трудовая книжка или сведения о трудовой деятельности, документ о регистрации в системе учёта, документы воинского учёта и об образовании, трудовой договор, приказ о приёме или увольнении, должностная инструкция, график сменности, заявления, график отпусков и документы о взыскании.</dd>
+        </dl>
+        <p>Разд. 2, 4–6 и раздел о дисциплине. OCR · <a href="../../corpus/text/mipt-pvtr.txt">Сохранённая текстовая копия</a></p>
+      </details>
+<details class="inventory-item">
+        <summary>Коллективный договор МФТИ</summary>
+        <dl>
+          <dt>Персонажи и участники</dt><dd>Работник, соискатель, администрация и работодатель, ректор, профсоюз, Профком и его представители, учёный совет, комиссии, профессорско-преподавательский состав и другие категории работников.</dd>
+          <dt>Предметы, документы и системы</dt><dd>Коллективный и трудовой договоры, устав и локальные акты, электронный документооборот, письменное заявление, график и документы на отпуск, расчёт оплаты труда, сведения об условиях труда, документы по охране труда, обращения и материалы по трудовому спору.</dd>
+        </dl>
+        <p>Разд. 2–6 и разделы о профсоюзе и охране труда · <a href="../../corpus/text/mipt-kollektivnyy-dogovor.txt">Сохранённая текстовая копия</a></p>
+      </details>
+</details>
+</section>
+</main>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const configs = {
+    aid: {
+      portraits: ['member-one', 'director', 'secretary', 'member-two'],
+      document: 'Заявление', subtitle: 'На материальную помощь',
+      pending: 'Стипендиальная комиссия рассматривает заявление.',
+      result: 'Решение стипендиальной комиссии оформляется протоколом.',
+      source: '../../corpus/text/mipt-matpomosch-obuch.txt', clause: 'Пп. 2.1–2.2'
+    },
+    leave: {
+      portraits: ['finance', 'director', 'member-two', 'member-one'],
+      document: 'Заявление', subtitle: 'На академический отпуск',
+      pending: 'Комиссия рассматривает заявление в случаях, указанных в п. 2.5.',
+      result: 'Решение комиссии оформляется протоколом.',
+      source: '../../corpus/text/mipt-otpuska-obuch.txt', clause: 'Пп. 2.5–2.6'
+    }
+  };
+  const stage = document.getElementById('commission-stage');
+  const play = document.getElementById('play');
+  const caption = document.getElementById('commission-caption');
+  const source = document.getElementById('commission-source');
+  const player = window.CommissionScene.create(stage, window.ComicPeople.portraitUrl);
+  const buttons = [...document.querySelectorAll('[data-case]')];
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  let active;
+  let frame;
+
+  function load(key) {
+    cancelAnimationFrame(frame);
+    active = configs[key];
+    player.load({ ...active, art: 'document-icon.svg' });
+    play.textContent = 'Смотреть';
+    caption.textContent = active.pending;
+    source.href = active.source;
+    source.textContent = active.clause + ' · Источник';
+    for (const button of buttons) button.setAttribute('aria-pressed', String(button.dataset.case === key));
+  }
+
+  for (const button of buttons) button.addEventListener('click', () => load(button.dataset.case));
+  play.addEventListener('click', () => {
+    cancelAnimationFrame(frame);
+    caption.textContent = active.pending;
+    const start = performance.now();
+    function tick(now) {
+      const time = motion.matches ? window.CommissionScene.duration : now - start;
+      player.render(time);
+      if (time < window.CommissionScene.duration) frame = requestAnimationFrame(tick);
+      else {
+        caption.textContent = active.result;
+        play.textContent = 'Повторить';
+      }
+    }
+    frame = requestAnimationFrame(tick);
+  });
+  load('aid');
+});
+</script>
+</body>
+</html>

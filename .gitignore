@@ -1,0 +1,19 @@
+node_modules/
+tmp/
+*.zip
+*.log
+.DS_Store
+Thumbs.db
+
+# intermediate downloaded pages, rebuilt by corpus/tools
+# (the documents themselves, corpus/raw and corpus/text, are in the repo)
+corpus/work/
+SHA256SUMS.txt
+source-files.json
+corpus/uploads/
+rag/data/
+corpus/originals/
+corpus/.cache/
+data/
+
+.env

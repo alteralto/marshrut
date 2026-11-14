@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru" data-style="apple" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Словарь регламентов · Маршрут</title>
+<link rel="stylesheet" href="../mockup/graphite.css">
+<link rel="stylesheet" href="/app.css">
+<script src="../mockup/graphite.js"></script>
+<script src="glossary-terms.js"></script>
+<script src="route-guide.js"></script>
+<style>
+  main { max-width: 780px; margin: 32px auto; }
+  #glossary-query { max-width: 420px; width: 100%; margin-top: 4px; }
+  .glossary-entry + .glossary-entry { border-top: 1px solid var(--rule); }
+  .glossary-entry { padding: 13px 0; }
+  .glossary-entry dt { font-size: 18px; font-weight: 650; }
+  .glossary-entry dd { margin: 4px 0 0; color: var(--muted); }
+  .glossary-entry a { display: block; margin-top: 5px; font-size: 13px; }
+</style>
+</head>
+<body>
+<main>
+  <p><a href="/">← Навигатор</a></p>
+  <section class="result">
+    <h1>Словарь регламентов</h1>
+    <p>Сокращения и названия из маршрутов МФТИ.</p>
+    <label for="glossary-query">Найти термин</label>
+    <div class="search"><input id="glossary-query" type="search" placeholder="Например, ИНБИКСТ"></div>
+    <dl id="glossary-entries"></dl>
+    <p id="glossary-empty" role="status" hidden>По этому запросу терминов нет.</p>
+  </section>
+</main>
+<script>
+const query = document.getElementById('glossary-query');
+const entries = document.getElementById('glossary-entries');
+const empty = document.getElementById('glossary-empty');
+function update() {
+  empty.hidden = window.RouteGuide.glossaryList(entries, query.value) > 0;
+}
+query.addEventListener('input', update);
+update();
+</script>
+</body>
+</html>

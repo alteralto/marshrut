@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Маршрут — схемы</title>
+<style>
+  :root {
+    --ink: #1d1d1f; --muted: #555963; --rule: #d9dbe1; --paper: #f5f5f7; --sheet: #ffffff;
+    --action: #0071e3; --soft: #e8f2ff; --selected: #0057ad;
+    --ok: #236745; --ok-soft: #e3f5eb; --warn: #77530e; --warn-soft: #fff0cc;
+    --font: "Segoe UI", -apple-system, system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #ccc; font-family: var(--font); color: var(--ink); }
+  .slide { width: 1600px; height: 900px; background: var(--paper); margin: 0 auto 40px; padding: 56px 64px; display: flex; flex-direction: column; gap: 28px; overflow: hidden; }
+  h1 { margin: 0; font-size: 44px; font-weight: 650; letter-spacing: -0.02em; }
+  .sub { margin: 6px 0 0; color: var(--muted); font-size: 22px; }
+
+  /* black box */
+  .bb { flex: 1; display: grid; grid-template-columns: 1fr 120px 420px 120px 1fr; align-items: center; }
+  .col { display: grid; gap: 14px; }
+  .col h2 { margin: 0 0 4px; font-size: 18px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .item { background: var(--sheet); border: 1px solid var(--rule); border-radius: 14px; padding: 14px 18px; }
+  .item b { display: block; font-size: 21px; line-height: 1.25; }
+  .item span { display: block; color: var(--muted); font-size: 17px; line-height: 1.35; margin-top: 3px; }
+  .item.plan { border-style: dashed; background: transparent; }
+  .item.plan b::after { content: " · план"; color: var(--muted); font-weight: 400; }
+  .arrow { height: 100%; display: grid; place-items: center; }
+  .arrow svg { width: 100px; height: 40px; }
+  .box { background: var(--ink); color: #fff; border-radius: 28px; padding: 40px 36px; display: grid; gap: 16px; align-content: center; min-height: 520px; }
+  .box .name { font-size: 46px; font-weight: 700; letter-spacing: -0.02em; }
+  .box p { margin: 0; font-size: 20px; line-height: 1.4; color: #d7d8dc; }
+  .box .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .box .tags span { border: 1px solid #5a5c63; border-radius: 999px; padding: 5px 12px; font-size: 15px; color: #e9e9ec; }
+  .out .item { border-left: 0; }
+  .out .item.ok { background: var(--ok-soft); border-color: #bfe3cd; }
+  .out .item.warn { background: var(--warn-soft); border-color: #f0dc9f; }
+
+  /* inside */
+  .inside { flex: 1; display: grid; grid-template-rows: 1fr 1fr auto auto; gap: 22px; }
+  .inside .node b { font-size: 20px; }
+  .inside .node span { font-size: 16px; }
+  .inside .flow .node { padding: 16px; align-content: center; }
+  .lane { display: grid; grid-template-columns: 210px 1fr; gap: 18px; align-items: stretch; }
+  .lane-label { background: var(--sheet); border: 1px solid var(--rule); border-radius: 14px; padding: 14px 16px; display: grid; align-content: center; }
+  .lane-label b { font-size: 21px; }
+  .lane-label span { color: var(--muted); font-size: 15px; line-height: 1.35; margin-top: 4px; }
+  .flow { display: flex; align-items: stretch; gap: 0; }
+  .node { flex: 1; background: var(--sheet); border: 1px solid var(--rule); border-radius: 14px; padding: 12px 14px; display: grid; align-content: start; gap: 4px; min-width: 0; }
+  .node b { font-size: 18px; line-height: 1.25; }
+  .node span { color: var(--muted); font-size: 14.5px; line-height: 1.35; }
+  .node.key { border: 2px solid var(--action); background: var(--soft); }
+  .node.key b { color: var(--selected); }
+  .node.model { border: 2px dashed var(--action); }
+  .link { flex: none; width: 28px; display: grid; place-items: center; }
+  .link svg { width: 22px; height: 18px; }
+  .store { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .store .node { background: transparent; border-style: solid; }
+  .foot { display: flex; gap: 28px; flex-wrap: wrap; font-size: 17px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 14px; }
+  .foot b { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<section class="slide" id="black-box">
+  <div>
+    <h1>Система как чёрный ящик</h1>
+    <p class="sub">Сотрудник спрашивает своими словами, система отвечает только тем, что написано в действующих регламентах</p>
+  </div>
+  <div class="bb">
+    <div class="col">
+      <h2>На входе</h2>
+      <div class="item"><b>Вопрос сотрудника</b><span>своими словами: «как открыть ФЛС», «с кем согласовать смету»</span></div>
+      <div class="item"><b>Регламенты и приказы</b><span>PDF, сканы, DOCX, XLSX: поставка, загрузка редактором, ссылка на страницу сайта</span></div>
+      <div class="item"><b>Права доступа</b><span>роль (гость, сотрудник, редактор) и режим документа: открытый или только после входа</span></div>
+      <div class="item plan"><b>1С:Документооборот</b><span>приказы и их изменения напрямую из системы документооборота</span></div>
+    </div>
+    <div class="arrow"><svg viewBox="0 0 100 40"><path d="M4 20h84M76 8l14 12-14 12" fill="none" stroke="#1d1d1f" stroke-width="3"/></svg></div>
+    <div class="box">
+      <div class="name">Маршрут</div>
+      <p>Находит регламент и нужные пункты, собирает ответ и шаги, проверяет каждый шаг по тексту пункта</p>
+      <div class="tags"><span>не выдумывает</span><span>ссылка на каждый пункт</span><span>только действующие редакции</span><span>ФИО не уходят наружу</span></div>
+    </div>
+    <div class="arrow"><svg viewBox="0 0 100 40"><path d="M4 20h84M76 8l14 12-14 12" fill="none" stroke="#1d1d1f" stroke-width="3"/></svg></div>
+    <div class="col out">
+      <h2>На выходе</h2>
+      <div class="item ok"><b>Короткий ответ</b><span>1–2 предложения со ссылкой на пункт</span></div>
+      <div class="item"><b>Шаги с картинками</b><span>кто, что делает, срок, бланк; сцена к каждому шагу</span></div>
+      <div class="item"><b>Документ и редакция</b><span>название, номер и дата приказа, статус: действует, изменён, утратил силу</span></div>
+      <div class="item"><b>Бланки и ссылка на маршрут</b><span>скачать или заполнить форму; маршрут, проверенный редактором</span></div>
+      <div class="item warn"><b>Честный отказ</b><span>«в регламентах нет ответа» и ближайшие документы</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="inside">
+  <div>
+    <h1>Что внутри</h1>
+    <p class="sub">Один процесс Node.js без внешних зависимостей. Языковая модель необязательна и проверяется так же, как выдержки</p>
+  </div>
+  <div class="inside">
+    <div class="lane">
+      <div class="lane-label"><b>Загрузка</b><span>один раз на документ</span></div>
+      <div class="flow">
+        <div class="node"><b>Приём</b><span>файл, архив или ссылка на страницу сайта; адреса внутренней сети запрещены</span></div>
+        <div class="link"><svg viewBox="0 0 22 18"><path d="M1 9h16M12 3l7 6-7 6" fill="none" stroke="#555963" stroke-width="2"/></svg></div>
+        <div class="node"><b>Чтение</b><span>текст PDF (Poppler), сканы (Tesseract, rus), DOCX и XLSX</span></div>
+        <div class="link"><svg viewBox="0 0 22 18"><path d="M1 9h16M12 3l7 6-7 6" fill="none" stroke="#555963" stroke-width="2"/></svg></div>
+        <div class="node"><b>Пункты</b><span>нарезка по номерам пунктов и разделам, таблицы построчно</span></div>
+        <div class="link"><svg viewBox="0 0 22 18"><path d="M1 9h16M12 3l7 6-7 6" fill="none" stroke="#555963" stroke-width="2"/></svg></div>
+        <div class="node key"><b>Редакции</b><span>номер, дата приказа; кто кого отменяет или изменяет</span></div>
+        <div class="link"><svg viewBox="0 0 22 18"><path d="M1 9h16M12 3l7 6-7 6" fill="none" stroke="#555963" stroke-width="2"/></svg></div>
+        <div class="node"><b>Индекс</b><span>BM25 по документам и пунктам, синонимы и сокращения (ФЛС, ФЭУ)</span></div>
+      </div>
+    </div>
+    <div class="lane">
+      <div class="lane-label"><b>Вопрос</b><span>каждый запрос, около 2 мс без модели</span></div>
+      <div class="flow">
+        <div class="node"><b>Документ</b><span>лучший регламент по вопросу; нет уверенного совпадения — отказ</span></div>
+        <div class="link"><svg viewBox="0 0 22 18"><path d="M1 9h16M12 3l7 6-7 6" fill="none" stroke="#555963" stroke-width="2"/></svg></div>
+        <div class="node"><b>Пункты</b><span>поиск внутри документа; устаревшая редакция уступает действующей</span></div>
+        <div class="link"><svg viewBox="0 0 22 18"><path d="M1 9h16M12 3l7 6-7 6" fill="none" stroke="#555963" stroke-width="2"/></svg></div>
+        <div class="node model"><b>Формулировка</b><span>GigaChat по открытым документам, ФИО и телефоны вырезаны; иначе дословные выдержки</span></div>
+        <div class="link"><svg viewBox="0 0 22 18"><path d="M1 9h16M12 3l7 6-7 6" fill="none" stroke="#555963" stroke-width="2"/></svg></div>
+        <div class="node key"><b>Проверка</b><span>каждый шаг и короткий ответ сверяются с пунктом: слова, числа, отрицания</span></div>
+        <div class="link"><svg viewBox="0 0 22 18"><path d="M1 9h16M12 3l7 6-7 6" fill="none" stroke="#555963" stroke-width="2"/></svg></div>
+        <div class="node"><b>Ответ</b><span>короткий ответ, шаги со сценами, бланки, пометки о редакциях</span></div>
+      </div>
+    </div>
+    <div class="lane">
+      <div class="lane-label"><b>Вокруг</b><span>хранение и доступ</span></div>
+      <div class="store">
+        <div class="node"><b>Доступ</b><span>коды редактора и читателя; закрытые документы не видны гостю и не уходят в модель</span></div>
+        <div class="node"><b>Хранилище /data</b><span>оригиналы, извлечённый текст, опубликованные маршруты, кэш распознавания</span></div>
+        <div class="node"><b>Редактор маршрута</b><span>черновик из пунктов, сцены к шагам, проверка и публикация ссылки</span></div>
+      </div>
+    </div>
+    <div class="foot">
+      <span>Документ найден: <b>43 из 43</b></span>
+      <span>Нужные пункты: <b>78%</b></span>
+      <span>Слепая проверка: выдумок <b>0</b>, верных отказов <b>8 из 8</b></span>
+      <span>Подделанные шаги отсеяны: <b>96,6%</b></span>
+      <span>Ответ без модели: <b>2 мс</b>, с GigaChat 3–10 с</span>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

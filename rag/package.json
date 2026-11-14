@@ -1,0 +1,20 @@
+{
+  "name": "mipt-reg-rag",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Навигатор по регламентам: гибридный поиск по пунктам и пошаговый ответ со ссылками",
+  "main": "src/index.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "ingest": "node cli.js ingest",
+    "ingest:fixtures": "node cli.js ingest fixtures/docs --out data/fixtures-index.json --no-embed",
+    "eval:fixtures": "node eval/run-eval.js --questions fixtures/eval-questions.json --index data/fixtures-index.json",
+    "eval:holdout": "node eval/run-eval.js --questions fixtures/eval-holdout.json --index data/fixtures-index.json --out eval/results/holdout-auto.json",
+    "serve": "node server.js"
+  },
+  "dependencies": {}
+}

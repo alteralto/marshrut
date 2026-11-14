@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="448" height="64" viewBox="0 0 448 64" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <title>Документы и предметы для сцен «Маршрута»</title>
+  <view id="folder" viewBox="0 0 64 64"/>
+  <view id="order" viewBox="64 0 64 64"/>
+  <view id="minutes" viewBox="128 0 64 64"/>
+  <view id="portal" viewBox="192 0 64 64"/>
+  <view id="extract" viewBox="256 0 64 64"/>
+  <view id="email" viewBox="320 0 64 64"/>
+  <view id="approval" viewBox="384 0 64 64"/>
+
+  <g stroke="#816044" stroke-width="2.5">
+    <path d="M8 18a5 5 0 0 1 5-5h13l6 6h17a5 5 0 0 1 5 5v24H8Z" fill="#f0cb8d"/>
+    <path d="M14 27a5 5 0 0 1 5-4h33a5 5 0 0 1 5 6l-4 19a5 5 0 0 1-5 4H12a5 5 0 0 1-5-6Z" fill="#fff3d9"/>
+    <path d="M22 35h24m-24 7h14" stroke="#a0764e"/>
+  </g>
+  <g transform="translate(64)" stroke="#5c445c" stroke-width="2.5">
+    <path d="M16 8h24l10 11v31a5 5 0 0 1-5 5H16a5 5 0 0 1-5-5V13a5 5 0 0 1 5-5Z" fill="#fff9ee"/>
+    <path d="M39 8v11h11M20 24h14m-14 7h21m-21 7h11"/>
+    <circle cx="41" cy="45" r="7" fill="#e6cbde" stroke="#976184"/>
+    <path d="m38 45 2 2 4-4" stroke="#7b4d6b" stroke-width="2"/>
+  </g>
+  <g transform="translate(128)" stroke="#53674d" stroke-width="2.5">
+    <rect x="11" y="9" width="42" height="46" rx="6" fill="#e8f1df"/>
+    <path d="M19 9v46m9-33h16m-16 8h16m-16 8h10m-10 8h13" stroke="#678461"/>
+  </g>
+  <g transform="translate(192)" stroke="#496480" stroke-width="2.5">
+    <rect x="7" y="13" width="50" height="34" rx="6" fill="#e6edf8"/>
+    <path d="M7 22h50M22 53h20M32 47v6"/>
+    <path d="M16 30h10m-10 7h10" stroke="#6988a4"/>
+    <path d="m34 34 4 4 8-9" stroke="#448269"/>
+  </g>
+  <g transform="translate(256)" stroke="#5c445c" stroke-width="2.5">
+    <path d="M16 8h25l9 10v33a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4V12a4 4 0 0 1 4-4Z" fill="#fff9ee"/>
+    <path d="M40 8v11h10M20 24h15m-15 7h21m-21 15h10"/>
+    <path d="M20 38h21" stroke="#a06a8e" stroke-width="4"/>
+  </g>
+  <g transform="translate(320)" stroke="#496480" stroke-width="2.5">
+    <rect x="7" y="15" width="50" height="34" rx="6" fill="#e6edf8"/>
+    <path d="m8 19 20 16a6 6 0 0 0 8 0l20-16M9 46l14-13m18 0 14 13"/>
+  </g>
+  <g transform="translate(384)" stroke="#53674d" stroke-width="2.5">
+    <rect x="10" y="11" width="36" height="43" rx="6" fill="#e8f1df"/>
+    <path d="M20 22h16m-16 8h12m-12 8h8" stroke="#678461"/>
+    <circle cx="44" cy="43" r="12" fill="#d4e9dc" stroke="#448269"/>
+    <path d="m39 43 4 4 7-8" stroke="#448269"/>
+  </g>
+</svg>

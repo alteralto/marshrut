@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 250">
+  <title>Персонажи для сцен «Маршрута»</title>
+  <view id="student" viewBox="0 0 240 250"/>
+  <view id="employee" viewBox="240 0 240 250"/>
+  <view id="director" viewBox="480 0 240 250"/>
+  <view id="finance" viewBox="720 0 240 250"/>
+  <view id="specialist" viewBox="960 0 240 250"/>
+  <view id="secretary" viewBox="1200 0 240 250"/>
+  <view id="member-one" viewBox="1440 0 240 250"/>
+  <view id="member-two" viewBox="1680 0 240 250"/>
+  <defs>
+    <g id="silhouette">
+      <path d="M13 250c6-45 24-73 62-83l25-7h42l27 7c37 10 57 38 63 83z" fill="var(--coat)"/>
+      <path d="M45 250l9-35m140 35l-8-35" fill="none" stroke="var(--seam)" stroke-width="2" stroke-linecap="round"/>
+      <path d="M101 138h39l4 28q-22 23-48 1z" fill="var(--shade)"/>
+      <path d="M81 85c0-25 18-43 40-43s40 18 40 43v18c0 27-15 49-40 49-24 0-40-21-40-49z" fill="var(--skin)"/>
+      <path d="M82 95c-15-8-17 15-4 20l6 1zm78 0c15-8 17 15 4 20l-6 1z" fill="var(--skin)"/>
+    </g>
+    <g id="face">
+      <path d="M91 92q7-5 15-2m28 0q9-4 16 1" fill="none" stroke="var(--hair)" stroke-width="2.1" stroke-linecap="round"/>
+      <ellipse cx="101" cy="101" rx="2.6" ry="3.1" fill="#40323b"/>
+      <ellipse cx="142" cy="101" rx="2.6" ry="3.1" fill="#40323b"/>
+      <path d="M121 101l3 12-6 1" fill="none" stroke="var(--shade)" stroke-width="1.9" stroke-linecap="round"/>
+      <ellipse cx="94" cy="117" rx="7.2" ry="3.1" fill="var(--blush)" opacity=".64"/>
+      <ellipse cx="148" cy="117" rx="7.2" ry="3.1" fill="var(--blush)" opacity=".64"/>
+      <path d="M114 129q8 6 16-1" fill="none" stroke="#9b554c" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <g id="spectacles" fill="none" stroke="var(--frames)" stroke-width="2.25">
+      <rect x="86" y="94" width="28" height="19" rx="8"/>
+      <rect x="128" y="94" width="28" height="19" rx="8"/>
+      <path d="M114 100q7-5 14 0m-42-1-6-3m76 3 6-3"/>
+    </g>
+  </defs>
+
+  <g style="--coat:#687eaa;--seam:#536b98;--skin:#f4bf9e;--shade:#db9277;--blush:#e28d7d;--hair:#634039">
+    <use href="#silhouette"/>
+    <path d="M95 166q26 21 50 0l12 4q-4 33-34 40-34-8-42-38z" fill="#ded1b7"/>
+    <path d="M71 83c-4-12-2-25 5-36-5-10 3-19 14-18 3-12 16-16 26-11 12-8 25-3 30 4 15-3 23 8 22 17 13 9 13 26 1 38l-7 18-8-23q-12 0-21-13c-10 14-29 18-46 13l-7 24z" fill="var(--hair)"/>
+    <path d="M87 48q6-13 21-10m20-8q16 1 21 13" fill="none" stroke="#926152" stroke-width="2.4" stroke-linecap="round"/>
+    <use href="#face"/>
+    <path d="M102 203v26m38-26v26" fill="none" stroke="#e6d8bd" stroke-width="2.6" stroke-linecap="round"/>
+  </g>
+
+  <g transform="translate(240)" style="--coat:#7a9689;--seam:#5e7d72;--skin:#e8ac86;--shade:#c98669;--blush:#d98272;--hair:#46343d">
+    <use href="#silhouette"/>
+    <path d="M97 162l24 23 24-23 17 11-14 32-27-17-25 17-16-32z" fill="#e6d9bc"/>
+    <path d="M76 97c-17-42 7-69 39-72 24-2 48 10 51 29 11 9 10 25-3 42l-7-28c-22 3-41-6-46-13-8 12-17 20-27 25l-2 16z" fill="var(--hair)"/>
+    <path d="M85 57q13-23 44-22m-11 13q20 13 38 8" fill="none" stroke="#66515b" stroke-width="2.2" stroke-linecap="round"/>
+    <use href="#face"/>
+    <path d="M121 205v45" stroke="#5e7d72" stroke-width="2"/>
+    <circle cx="128" cy="218" r="2" fill="#e8d5b2"/>
+    <circle cx="128" cy="237" r="2" fill="#e8d5b2"/>
+  </g>
+
+  <g transform="translate(480)" style="--coat:#5c607c;--seam:#484e6b;--skin:#f1bb9c;--shade:#d29178;--blush:#d98075;--hair:#835644;--frames:#625154">
+    <path d="M70 89c-6-36 10-67 46-70 29-3 54 13 58 45 3 25 0 51 10 79q-27 14-50 7l-39-2q-19 4-36-8c13-20 15-35 11-51z" fill="var(--hair)"/>
+    <use href="#silhouette"/>
+    <path d="M98 165q23 24 46 0l4 85H95z" fill="#f0dbbf"/>
+    <path d="M96 164l-24 20 9 26 17-3-9 17 19 26h9zm49 0 25 20-9 26-17-3 9 17-19 26h-10z" fill="#4b506d"/>
+    <path d="M72 95c-6-24 4-50 20-60 22-15 51-14 69 7 10 12 10 33 2 52l-6-21q-14-3-25-26-9 23-47 31l-5 20z" fill="var(--hair)"/>
+    <path d="M82 65q13-28 46-31m8 1q17 10 22 26" fill="none" stroke="#ab7b61" stroke-width="2.3" stroke-linecap="round"/>
+    <use href="#face"/><use href="#spectacles"/>
+    <circle cx="79" cy="117" r="4.2" fill="#e4b576"/>
+    <circle cx="162" cy="117" r="4.2" fill="#e4b576"/>
+  </g>
+
+  <g transform="translate(720)" style="--coat:#9a714f;--seam:#815b42;--skin:#f0bd9c;--shade:#d79273;--blush:#e28a74;--hair:#53444a;--frames:#594957">
+    <use href="#silhouette"/>
+    <path d="M96 164l25 29 23-29 21 9-26 77h-35l-26-77z" fill="#eee1cd"/>
+    <path d="M116 193h10l6 35-10 12-12-12z" fill="#857695"/>
+    <path d="M77 97c-14-24-7-47 10-58 11-9 28-14 47-12 20 1 37 10 39 28l-9 38-7-20q-20 6-46-18c-8 15-19 22-28 24l-2 17z" fill="var(--hair)"/>
+    <path d="M83 59q17-21 43-20m0 9q21 13 38 10" fill="none" stroke="#8a7778" stroke-width="2.5" stroke-linecap="round"/>
+    <use href="#face"/><use href="#spectacles"/>
+    <path d="M93 123q4 20 26 24 24-2 30-22-4 20-12 26-10 7-24 4-16-3-20-17z" fill="#78605e" opacity=".66"/>
+  </g>
+
+  <g transform="translate(960)" style="--coat:#946b86;--seam:#78566f;--skin:#f6c7a9;--shade:#d8947b;--blush:#e28d83;--hair:#a26140">
+    <circle cx="157" cy="33" r="25" fill="#98593b"/>
+    <use href="#silhouette"/>
+    <path d="M94 166q27 24 53 0l14 4q-7 26-38 35-35-9-42-34z" fill="#efdac1"/>
+    <path d="M73 94C61 67 76 35 102 28c34-10 66 8 70 36 2 13-3 24-11 31l-6-19q-26-5-32-28-6 23-39 31l-4 18z" fill="var(--hair)"/>
+    <path d="M80 67q11-23 32-27m17-2q21 4 30 24" fill="none" stroke="#c7875b" stroke-width="2.5" stroke-linecap="round"/>
+    <use href="#face"/>
+    <path d="M76 115q-6 13 4 14 7-1 6-12m76-1q7 13-3 15-7-1-5-12" fill="none" stroke="#be9656" stroke-width="2.6"/>
+    <path d="M110 211q12 9 23 0" stroke="#e0bc8a" stroke-width="1.7" fill="none"/>
+    <circle cx="122" cy="218" r="3" fill="#e0bc8a"/>
+  </g>
+  <!-- Секретарь комиссии (Ольга): каре, терракотовый жакет. -->
+  <g transform="translate(1200)" style="--coat:#b95745;--seam:#9e443b;--skin:#f6bb9e;--shade:#d9927a;--blush:#e2877a;--hair:#352b36">
+    <path d="M72 96c-8-34 8-66 44-69 31-3 54 13 57 43 2 20-1 36 5 53q-22 9-42 3l-39-1q-18 4-31-5c9-8 10-15 6-24z" fill="var(--hair)"/>
+    <use href="#silhouette"/>
+    <path d="M97 163q24 22 47 0l3 87H95z" fill="#f3e1ca"/>
+    <path d="M96 163l-23 19 10 27 16-4-8 18 18 27h8zm49 0 24 19-10 27-16-4 8 18-18 27h-8z" fill="var(--seam)"/>
+    <path d="M74 98c-5-26 6-52 24-62 22-12 50-10 66 8 9 11 10 29 3 47l-5-19q-18-2-36-22-12 20-46 27l-6 21z" fill="var(--hair)"/>
+    <path d="M86 62q14-24 44-25" fill="none" stroke="#5b4a57" stroke-width="2.3" stroke-linecap="round"/>
+    <use href="#face"/>
+    <circle cx="79" cy="118" r="3.6" fill="#e4b576"/>
+    <circle cx="162" cy="118" r="3.6" fill="#e4b576"/>
+  </g>
+
+  <!-- Член комиссии (Андрей): очки, короткая стрижка, рубашка с галстуком. -->
+  <g transform="translate(1440)" style="--coat:#779396;--seam:#5f7b7e;--skin:#e8ab86;--shade:#c98669;--blush:#d98272;--hair:#5a4a44;--frames:#4c4246">
+    <use href="#silhouette"/>
+    <path d="M96 164l25 29 23-29 21 9-26 77h-35l-26-77z" fill="#eef0ea"/>
+    <path d="M116 193h10l6 35-10 12-12-12z" fill="#3f5a6e"/>
+    <path d="M77 95c-13-36 6-63 38-67 25-3 48 7 53 27 9 10 7 24-4 38l-6-25c-22 2-40-5-46-12-8 11-18 18-28 22l-2 17z" fill="var(--hair)"/>
+    <path d="M86 58q14-21 42-21" fill="none" stroke="#7d6a63" stroke-width="2.3" stroke-linecap="round"/>
+    <use href="#face"/><use href="#spectacles"/>
+  </g>
+
+  <!-- Член комиссии (Вера): пучок, сливовый жакет. -->
+  <g transform="translate(1680)" style="--coat:#735981;--seam:#5d4769;--skin:#f2bb9d;--shade:#d6937a;--blush:#e08a82;--hair:#6b4a3a">
+    <circle cx="121" cy="27" r="22" fill="#5f4133"/>
+    <use href="#silhouette"/>
+    <path d="M94 166q27 24 53 0l14 4q-7 26-38 35-35-9-42-34z" fill="#efe0cf"/>
+    <path d="M74 95c-11-28 3-58 30-65 33-9 63 8 67 35 2 13-2 23-10 30l-6-19q-24-6-35-27-8 22-38 29l-4 18z" fill="var(--hair)"/>
+    <path d="M84 64q12-22 34-26m14 0q20 5 28 24" fill="none" stroke="#8f6a57" stroke-width="2.4" stroke-linecap="round"/>
+    <use href="#face"/>
+    <path d="M108 211q13 8 26 0" stroke="#e0bc8a" stroke-width="1.7" fill="none"/>
+  </g>
+</svg>

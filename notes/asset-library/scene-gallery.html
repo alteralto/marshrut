@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ru" data-style="apple" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Галерея сцен · Маршрут</title>
+<link rel="stylesheet" href="../mockup/graphite.css">
+<script src="../mockup/graphite.js"></script>
+<script defer src="comic-people.js"></script>
+<script defer src="scene-kit.js"></script>
+<script defer src="prepare-scene.js"></script>
+<script defer src="transfer-scene.js"></script>
+<script defer src="check-scene.js"></script>
+<script defer src="commission-scene.js"></script>
+<script defer src="route-action-scene.js"></script>
+<script defer src="scene-editor.js"></script>
+<script defer src="scene-gallery-examples.js"></script>
+<script defer src="scene-gallery.js"></script>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.5 var(--font); }
+main { width: min(100% - 32px, 1180px); margin: auto; padding: 22px 0 48px; }
+nav { display: flex; gap: 16px; flex-wrap: wrap; }
+a { color: var(--stamp); text-underline-offset: 4px; }
+h1 { margin: 28px 0 6px; font-size: clamp(35px, 5vw, 58px); line-height: 1.05; letter-spacing: -.05em; }
+.lead { margin: 0 0 18px; color: var(--muted); max-width: 70ch; }
+.toolbar { display: flex; gap: 10px 14px; align-items: end; flex-wrap: wrap; margin: 20px 0 12px; }
+.toolbar label { display: grid; gap: 4px; min-width: 0; }
+.toolbar select { max-width: 100%; }
+.toolbar .search { flex: 1 1 230px; }
+select, input, button { font: inherit; border-radius: 9px; padding: 6px 10px; color: var(--ink); border: 1px solid var(--rule); background: var(--sheet); }
+button { cursor: pointer; }
+button:hover { border-color: var(--stamp); }
+#count { color: var(--muted); margin: 0 0 12px; font-variant-numeric: tabular-nums; }
+#gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); gap: 16px; }
+#gallery.comparison { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#gallery.comparison article { display: flex; flex-direction: column; }
+#gallery.comparison .caption { flex: 1; grid-template-rows: auto auto 1fr auto; }
+@media (max-width: 740px) {
+  #gallery.comparison { grid-template-columns: 1fr; }
+}
+article { overflow: hidden; background: var(--sheet); border: 1px solid var(--rule); border-radius: var(--radius-card); box-shadow: var(--card-shadow); }
+article svg { display: block; width: 100%; aspect-ratio: 960 / 460; height: auto; background: var(--lane); }
+.caption { padding: 12px 16px 14px; display: grid; gap: 4px; }
+.caption h2 { margin: 0; font-size: 18px; }
+.caption p { margin: 0; color: var(--muted); overflow-wrap: anywhere; }
+.card-actions { display: flex; gap: 8px 14px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-top: 6px; }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <nav aria-label="Разделы"><a href="/">← Навигатор</a><a href="scene-gallery.html">Все сцены</a><a href="?compare=delivery">Сравнить способы отправки</a><a href="?compare=review">Согласование и подписание</a><a href="?compare=materials">Проверка и комиссия</a><a href="mipt-scene-library.html">Обзор библиотеки</a><a href="scene-workshop.html">Предметы</a><a href="comic-cast.html">Персонажи</a></nav>
+  <h1>Библиотека сцен</h1>
+  <p class="lead">Посмотрите, как шаблоны показывают действия из регламентов МФТИ. Откройте пункт под сценой, чтобы сверить её с источником.</p>
+  <div class="toolbar">
+    <label class="search">Найти сцену <input id="search" type="search" placeholder="Например, аванс или ОМС"></label>
+    <label>Регламент <select id="group"><option value="">Все регламенты</option></select></label>
+    <label>Тип сцены <select id="type"><option value="">Все типы</option></select></label>
+    <button id="reset" type="button">Сбросить</button>
+    <div role="group" aria-label="Тема оформления">
+      <button type="button" data-set-theme="light">Светлая</button>
+      <button type="button" data-set-theme="dark">Тёмная</button>
+    </div>
+  </div>
+  <p id="count" role="status"></p>
+  <p id="empty" hidden>Сцен по этому запросу нет.</p>
+  <div id="gallery"></div>
+</main>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ru" data-style="apple" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Маршрут — навигатор сотрудника</title>
+<link rel="stylesheet" href="/graphite.css">
+<link rel="stylesheet" href="/notes/asset-library/route-guide.css">
+<link rel="stylesheet" href="/app.css">
+<script src="/graphite.js"></script>
+<script defer src="/notes/asset-library/comic-people.js"></script>
+<script defer src="/notes/asset-library/scene-examples.js"></script>
+<script defer src="/notes/asset-library/scene-kit.js"></script>
+<script defer src="/notes/asset-library/commission-scene.js"></script>
+<script defer src="/notes/asset-library/prepare-scene.js"></script>
+<script defer src="/notes/asset-library/transfer-scene.js"></script>
+<script defer src="/notes/asset-library/check-scene.js"></script>
+<script defer src="/notes/asset-library/glossary-terms.js"></script>
+<script defer src="/notes/asset-library/route-guide.js"></script>
+<script defer src="/notes/asset-library/route-action-scene.js"></script>
+<script defer src="/notes/asset-library/scene-editor.js"></script>
+<script defer src="/app.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="/" aria-label="Маршрут, главная"><span class="brand-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 21 21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16h4l3-10h4l3 10h2"/><circle cx="3" cy="16" r="1.2" fill="currentColor"/><circle cx="18" cy="16" r="1.2" fill="currentColor"/></svg></span> Маршрут</a>
+  <div class="top-actions">
+  <button class="secondary" type="button" id="open-library">Регламенты</button>
+  <button class="secondary" type="button" id="open-access" hidden>Войти</button>
+  <a class="secondary" href="/notes/asset-library/glossary.html">Словарь</a>
+  <div class="text-size" role="group" aria-label="Размер текста">
+    <span>Текст</span>
+    <button type="button" data-text-size="1" aria-pressed="true">А</button>
+    <button type="button" data-text-size="1.12" aria-pressed="false">А+</button>
+    <button type="button" data-text-size="1.25" aria-pressed="false">А++</button>
+  </div>
+  <div class="theme-picker" role="group" aria-label="Тема оформления">
+    <button type="button" data-set-theme="dark" aria-pressed="false">Тёмная</button>
+    <button type="button" data-set-theme="light" aria-pressed="true">Светлая</button>
+  </div>
+  </div>
+</header>
+<main>
+  <section class="intro" aria-labelledby="title">
+    <p class="overline" id="corpus-status">Загрузка базы документов…</p>
+    <h1 id="title">Что нужно сделать?</h1>
+    <p class="subtitle">Напишите вопрос своими словами. Под каждым шагом указан пункт регламента.</p>
+    <form id="question-form">
+      <label for="question">Ваш вопрос</label>
+      <div class="search">
+        <input id="question" name="question" maxlength="2000" placeholder="Что вам нужно оформить?" required>
+        <button class="primary" type="submit">Найти ответ</button>
+      </div>
+    </form>
+    <div id="examples" class="examples" aria-label="Примеры вопросов"></div>
+  </section>
+  <div class="workspace">
+    <section class="result" aria-labelledby="result-title">
+      <h2 id="result-title">Ответ</h2>
+      <div class="short" id="short">
+        <p id="notice" role="status">Задайте вопрос или выберите пример.</p>
+        <p class="short-source" id="short-source" hidden></p>
+      </div>
+      <div class="result-actions">
+        <button id="open-story" class="secondary" type="button" hidden>Показать маршрут по шагам</button>
+        <span id="route-share"></span>
+      </div>
+      <div class="progress" id="progress" hidden>
+        <div class="progress-text"><strong id="progress-count"></strong><span id="progress-note">Личный чек-лист: отметки хранятся только в этом браузере и не подтверждают согласование в 1С.</span></div>
+        <div class="progress-bar" aria-hidden="true"><span id="progress-fill"></span></div>
+      </div>
+      <ol id="steps"></ol>
+      <section id="route-summary" hidden aria-labelledby="route-title"></section>
+    </section>
+    <aside class="sources" aria-labelledby="sources-title">
+      <h2 id="sources-title">Документы</h2>
+      <ul id="documents"></ul>
+    </aside>
+  </div>
+</main>
+<footer class="site-footer">
+  <nav aria-label="Инструменты редактора"><span class="footer-label">Для редактора:</span>
+    <a class="secondary" href="/notes/asset-library/scene-gallery.html">Библиотека сцен</a>
+    <button class="secondary" type="button" id="open-review">Черновик маршрута</button>
+  </nav>
+</footer>
+<dialog id="access-dialog" aria-labelledby="access-title">
+  <div class="dialog-heading"><h2 id="access-title">Доступ к регламентам</h2><form method="dialog"><button class="secondary">Закрыть</button></form></div>
+  <form id="access-form">
+    <label for="access-code">Код доступа</label>
+    <input type="password" id="access-code" required autocomplete="current-password">
+    <button type="submit" class="primary">Войти</button>
+  </form>
+  <button type="button" id="access-logout" class="secondary" hidden>Выйти</button>
+  <p id="access-status" role="status"></p>
+</dialog>
+<dialog id="library" aria-labelledby="library-title">
+  <div class="dialog-heading"><h2 id="library-title">Библиотека регламентов</h2><form method="dialog"><button class="secondary">Закрыть</button></form></div>
+  <form id="import-form">
+    <label for="files">Добавить документы</label>
+    <input type="file" id="files" name="files" accept=".pdf,.docx,.xlsx,.txt,.md,.html,.htm" multiple>
+    <label for="source-url">Или ссылка на документ или страницу сайта</label>
+    <input type="url" id="source-url" name="source" placeholder="https://…">
+    <p class="step-meta">Без выбранного файла сервер скачает документ по ссылке, а со страницы сайта возьмёт все PDF, DOCX и XLSX. С выбранным файлом ссылка сохранится как адрес оригинала. Новые документы доступны после входа.</p>
+    <button type="submit" class="primary">Загрузить и проиндексировать</button>
+    <p role="status" id="import-status"></p>
+    <ul id="import-skipped"></ul>
+  </form>
+  <label for="library-filter">Найти документ по названию</label>
+  <input type="search" id="library-filter" placeholder="Например, командирование">
+  <label class="library-uploaded"><input type="checkbox" id="library-uploaded"> Только загруженные пользователями</label>
+  <p id="library-count"></p>
+  <p id="library-access-status" role="status"></p>
+  <ul id="library-docs"></ul>
+  <button type="button" class="secondary" id="more-documents" hidden>Показать ещё</button>
+</dialog>
+<dialog id="review" aria-labelledby="review-title">
+  <div class="dialog-heading"><h2 id="review-title">Проверка черновика</h2><form method="dialog"><button class="secondary">Закрыть</button></form></div>
+  <label for="review-source">Регламент</label>
+  <select id="review-source"></select>
+  <p id="review-document"></p>
+  <p id="review-status" role="status"></p>
+  <div id="review-add" class="review-add" hidden>
+    <label for="review-add-source">Пункт для дополнительного шага</label>
+    <select id="review-add-source"></select>
+    <button type="button" class="secondary" id="review-add-step">Добавить шаг</button>
+  </div>
+  <ol id="review-steps"></ol>
+  <section id="review-summary" hidden aria-label="Предпросмотр схемы и чек-листа"></section>
+  <div class="review-actions">
+    <button type="button" id="publish-route" class="primary" disabled>Опубликовать маршрут</button>
+    <button type="button" id="view-published" class="secondary" hidden>Открыть опубликованный</button>
+  </div>
+</dialog>
+<dialog id="story" aria-labelledby="story-title">
+  <div class="dialog-heading"><h2 id="story-title">Маршрут по ролям</h2><form method="dialog"><button class="secondary">Закрыть</button></form></div>
+  <details id="story-map" class="story-map">
+    <summary>Все этапы маршрута</summary>
+    <ol id="story-stages"></ol>
+  </details>
+  <div id="story-frame"></div>
+  <div class="story-controls">
+    <button id="story-back" class="secondary" type="button">← Назад</button>
+    <span id="story-position" aria-live="polite"></span>
+    <button id="story-next" class="primary" type="button">Дальше →</button>
+  </div>
+</dialog>
+<dialog id="form-preview" aria-labelledby="form-preview-title">
+  <div class="dialog-heading">
+    <h2 id="form-preview-title"></h2>
+    <form method="dialog"><button class="secondary">Закрыть</button></form>
+  </div>
+  <p id="form-preview-source" class="step-meta"></p>
+  <div class="form-preview-actions">
+    <a id="form-preview-download" class="primary" download>Скачать бланк</a>
+    <a id="form-preview-reference" target="_blank" rel="noopener">Пункт регламента</a>
+  </div>
+  <details id="form-preview-image" class="form-preview-image" hidden>
+    <summary>Первая страница исходного бланка</summary>
+    <div><img alt="Первая страница бланка для заполнения"></div>
+  </details>
+  <form id="fill-form" hidden>
+    <p id="fill-intro" class="step-meta"></p>
+    <div id="fill-fields"></div>
+    <div class="fill-export">
+      <button class="primary" type="submit">Скачать заполненный Word</button>
+      <p id="fill-status" role="status"></p>
+    </div>
+  </form>
+  <div id="form-paper" class="form-paper">
+    <h3>Поля бланка</h3>
+    <ul id="form-preview-fields"></ul>
+  </div>
+</dialog>
+</body>
+</html>

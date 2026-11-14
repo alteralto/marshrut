@@ -1,0 +1,32 @@
+# docker compose up --build          the application alone: answers are verbatim extracts
+# docker compose --profile llm up    plus a local language model (see README, "Модель")
+services:
+  marshrut:
+    build: .
+    ports:
+      - "${PORT:-8787}:8787"
+    environment:
+      EDITOR_TOKEN: "${EDITOR_TOKEN:-demo}"
+      READER_TOKEN: "${READER_TOKEN:-}"
+      SECURE_COOKIES: "${SECURE_COOKIES:-0}"
+      LLM_BASE_URL: "${LLM_BASE_URL:-}"
+      LLM_MODEL: "${LLM_MODEL:-}"
+      LLM_API_KEY: "${LLM_API_KEY:-}"
+      GIGACHAT_CREDENTIALS: "${GIGACHAT_CREDENTIALS:-}"
+      GIGACHAT_SCOPE: "${GIGACHAT_SCOPE:-}"
+      GIGACHAT_MODEL: "${GIGACHAT_MODEL:-}"
+      ALLOW_EXTERNAL_LLM: "${ALLOW_EXTERNAL_LLM:-}"
+    volumes:
+      - marshrut-data:/data
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:0.5.7
+    profiles: ["llm"]
+    volumes:
+      - ollama-models:/root/.ollama
+    restart: unless-stopped
+
+volumes:
+  marshrut-data:
+  ollama-models:
